@@ -1,9 +1,9 @@
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
-import 'package:fast_app_base/data/memory/vo_todo.dart';
+import 'package:fast_app_base/data/memory/bloc/todo_event.dart';
 import 'package:fast_app_base/screen/main/tab/tab_item.dart';
 import 'package:fast_app_base/screen/main/tab/tab_navigator.dart';
-import 'package:fast_app_base/screen/main/write/d_write_todo.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../common/common.dart';
 import 'w_menu_drawer.dart';
@@ -15,7 +15,7 @@ class MainScreen extends StatefulWidget {
   State<MainScreen> createState() => MainScreenState();
 }
 
-class MainScreenState extends State<MainScreen> with SingleTickerProviderStateMixin, TodoDataProvider {
+class MainScreenState extends State<MainScreen> with SingleTickerProviderStateMixin {
   TabItem _currentTab = TabItem.todo;
   final tabs = [TabItem.todo, TabItem.search];
   final List<GlobalKey<NavigatorState>> navigatorKeys = [];
@@ -54,7 +54,10 @@ class MainScreenState extends State<MainScreen> with SingleTickerProviderStateMi
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () async {
-            todoData.addTodo();
+            // final todoData = context.read<TodoCubit>();
+            // todoData.addTodo();
+            // context.readTodoCubit.addTodo();
+            context.readTodoBloc.add(TodoAddEvent());
           },
           child: const Icon(EvaIcons.plus),
         ),
